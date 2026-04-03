@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Project {
+  id           String         @id
+  title        String
+  description  String
+  tags         String[]
+  githubUrl    String?
+  liveUrl      String?
+  featured     Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime
+  ProjectImage ProjectImage[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model ProjectImage {
+  id        String   @id
+  imageUrl  String
+  altText   String
+  sortOrder Int      @default(0)
+  projectId String
+  createdAt DateTime @default(now())
+  Project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}

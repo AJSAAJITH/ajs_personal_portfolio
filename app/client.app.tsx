@@ -1,0 +1,27 @@
+"use client";
+import { Navbar } from '@/components/navbar';
+import { Hero } from '@/components/hero';
+import { About } from '@/components/about';
+import { Skills } from '@/components/skills';
+
+import { Experience } from '@/components/experience';
+import { Contact } from '@/components/contact';
+import { Footer } from '@/components/footer';
+import { ScrollProgress } from '@/components/scroll-progress';
+import { Projects } from '@/components/projects/projects-section';
+
+export default function Home_ClientPage() {
+    return (
+        <main className="min-h-screen bg-background text-foreground overflow-x-hidden">
+            <ScrollProgress />
+            <Navbar />
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Experience />
+            <Contact />
+            <Footer />
+        </main>
+    );
+}
