@@ -48,9 +48,9 @@ export function ProjectCard({
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
+                    {project.tags.map((tag, idx) => (
                         <span
-                            key={tag}
+                            key={`${tag}-${idx}`} // Make sure keys are unique
                             className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary"
                         >
                             {tag}

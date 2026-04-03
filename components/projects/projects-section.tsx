@@ -1,11 +1,8 @@
 'use client';
 
-import {
-    useEffect,
-    useState,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { getProjectsAction } from '@/actions/projects.action';
+import { projects as staticProjects } from '@/lib/data/projects';
 
 import { Project } from './type';
 import { ProjectSlider } from './project-slider';
@@ -17,65 +14,24 @@ export function Projects() {
         triggerOnce: true,
     });
 
-    const [projects, setProjects] =
-        useState<Project[]>([]);
-
-    const [currentPage, setCurrentPage] =
-        useState(0);
-
-    const [projectsPerPage, setProjectsPerPage] =
-        useState(3);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [projectsPerPage, setProjectsPerPage] = useState(3);
 
     useEffect(() => {
         function handleResize() {
-            if (window.innerWidth < 768) {
-                setProjectsPerPage(1);
-            } else {
-                setProjectsPerPage(3);
-            }
+            setProjectsPerPage(window.innerWidth < 768 ? 1 : 3);
         }
 
-        handleResize(); // initial load
-
-        window.addEventListener(
-            'resize',
-            handleResize
-        );
+        handleResize();
+        window.addEventListener('resize', handleResize);
 
         return () =>
-            window.removeEventListener(
-                'resize',
-                handleResize
-            );
+            window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        async function fetchProjects() {
-            const dbProjects =
-                await getProjectsAction();
-
-            const formatted =
-                dbProjects.map((project) => ({
-                    id: project.id,
-                    title: project.title,
-                    description:
-                        project.description,
-                    tags: project.tags,
-                    image:
-                        project.ProjectImage?.[0]
-                            ?.imageUrl ??
-                        '/assets/projects/placeholder.jpg',
-                    github:
-                        project.githubUrl,
-                    live:
-                        project.liveUrl,
-                }));
-
-            setProjects(formatted);
-        }
-
-        fetchProjects();
-    }, []);
+    const projects = [...staticProjects].sort(
+        (a, b) => Number(b.id) - Number(a.id)
+    );
 
     const totalPages = Math.ceil(
         projects.length / projectsPerPage
@@ -115,9 +71,7 @@ export function Projects() {
                                 : prev + 1
                         )
                     }
-                    onDotClick={
-                        setCurrentPage
-                    }
+                    onDotClick={setCurrentPage}
                 />
             </div>
         </section>
