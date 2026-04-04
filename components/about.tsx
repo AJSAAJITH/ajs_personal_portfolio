@@ -49,7 +49,7 @@ export function About() {
             <div className="pt-4">
               <a
                 target="_blank"
-                href="https://drive.google.com/file/d/1EupIg0xaauveNTOCH9AodeUAUKGiCRUh/view" download>
+                href="https://drive.google.com/file/d/14Qc4qG7vMBNZaRSV69KMuCdBkTzn3ABm/view?usp=sharing" download>
                 <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold gap-2 cursor-pointer">
                   <Download className="w-4 h-4" />
                   Download CV
